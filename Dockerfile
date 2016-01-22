@@ -9,10 +9,8 @@
 # Require: Docker (http://www.docker.io/)
 # -----------------------------------------------------------------------------
 
-
 # Base system is the LTS version of Ubuntu.
 FROM   ubuntu:14.04
-
 
 # Make sure we don't get notifications we can't answer during building.
 ENV    DEBIAN_FRONTEND noninteractive
@@ -25,15 +23,6 @@ RUN    echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-se
        echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections  && \
        apt-get --yes install curl oracle-java8-installer ; apt-get clean
 
-
-# Load in all of our config files.
-ADD    ./scripts/start /start
-
-
-# Fix all permissions
-RUN    chmod +x /start
-
-
 # 25565 is for minecraft
 EXPOSE 25565
 
@@ -41,4 +30,4 @@ EXPOSE 25565
 VOLUME ["/data"]
 
 # /start runs it.
-CMD    ["/start"]
+CMD    ["/data/start-mcsrv"]
